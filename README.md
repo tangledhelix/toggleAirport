@@ -49,11 +49,11 @@ Activation
 
 You'll need to activate the service after it's installed.
 
-	launchctl load /Library/LaunchAgents/com.tangledhelix.toggleairport.plist
+	sudo launchctl load /Library/LaunchAgents/com.tangledhelix.toggleairport.plist
 
 To deactivate, unload it:
 
-	launchctl unload /Library/LaunchAgents/com.tangledhelix.toggleairport.plist
+	sudo launchctl unload /Library/LaunchAgents/com.tangledhelix.toggleairport.plist
 
 Bluetooth support
 -----------------
