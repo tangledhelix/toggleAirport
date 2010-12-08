@@ -3,7 +3,7 @@ Credits
 
 toggleAirport is based on this post:
 
-http://hints.macworld.com/article.php?story=20100927161027611
+<http://hints.macworld.com/article.php?story=20100927161027611>
 
 Purpose
 -------
