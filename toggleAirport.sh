@@ -2,11 +2,14 @@
 #
 # Adapted from http://hints.macworld.com/article.php?story=20100927161027611
 
+# ----- START CONFIGURATION ----- #
+
 # Change to your growlnotify path
 GROWL="/usr/bin/growlnotify"
 
-# Adjust to the interface name of your airport card (en1 is correct on
-# many Mac laptops)
+# Adjust to use the interface names on your system. On many Macs, these
+# defaults are correct.
+ETHERNET="en0"
 AIRPORT="en1"
 
 # Set to 'yes' if you want to toggle Bluetooth as well. Requires blueutil.
@@ -15,23 +18,31 @@ BLUETOOTH="no"
 # Path to blueutil
 BLUEUTIL="/usr/local/bin/blueutil"
 
+# ----- END CONFIGURATION ----- #
+
+# You probably shouldn't change anything past this point.
+
+_nsetup="/usr/sbin/networksetup"
+_flag_air="/var/tmp/prev_air_on"
+_flag_eth="/var/tmp/prev_eth_on"
+
 set_airport() {
 
 	new_status=$1
 
 	if [ $new_status = "On" ]; then
-		/usr/sbin/networksetup -setairportpower $AIRPORT on
+		$_nsetup -setairportpower $AIRPORT on
 		if [ "$BLUETOOTH" = "yes" ]; then
 			$BLUEUTIL off
 		fi
-		touch /var/tmp/prev_air_on
+		touch $_flag_air
 	else
-		/usr/sbin/networksetup -setairportpower $AIRPORT off
+		$_nsetup -setairportpower $AIRPORT off
 		if [ "$BLUETOOTH" = "yes" ]; then
 			$BLUEUTIL on
 		fi
-		if [ -f "/var/tmp/prev_air_on" ]; then
-			rm /var/tmp/prev_air_on
+		if [ -f "$_flag_air" ]; then
+			rm $_flag_air
 		fi
 	fi
 
@@ -53,29 +64,28 @@ prev_air_status="Off"
 eth_status="Off"
 
 # Determine previous ethernet status
-# If file prev_eth_on exists, ethernet was active last time we checked
-if [ -f "/var/tmp/prev_eth_on" ]; then
+# If eth flag file exists, ethernet was active last time we checked
+if [ -f "$_flag_eth" ]; then
 	prev_eth_status="On"
 fi
 
 # Determine same for AirPort status
-# File is prev_air_on
-if [ -f "/var/tmp/prev_air_on" ]; then
+if [ -f "$_flag_air" ]; then
 	prev_air_status="On"
 fi
 
 # Check actual current ethernet status
-if [ "`ifconfig en0 | grep \"status: active\"`" != "" ]; then
+if [ "`ifconfig $ETHERNET | grep \"status: active\"`" != "" ]; then
 	eth_status="On"
 fi
 
 # And actual current AirPort status
-air_status=`/usr/sbin/networksetup -getairportpower $AIRPORT | awk '{ print $4 }'`
+air_status=`$_nsetup -getairportpower $AIRPORT | awk '{ print $4 }'`
 
 # If any change has occured. Run external script (if it exists)
 if [ "$prev_air_status" != "$air_status" ] || [ "$prev_eth_status" != "$eth_status" ]; then
 	if [ -f "./statusChanged.sh" ]; then
-		"./statusChanged.sh" "$eth_status" "$air_status" &
+		./statusChanged.sh "$eth_status" "$air_status" &
 	fi
 fi
 
@@ -110,11 +120,11 @@ else
 fi
 
 # Update ethernet status
-if [ "$eth_status" == "On" ]; then
-	touch /var/tmp/prev_eth_on
+if [ "$eth_status" = "On" ]; then
+	touch $_flag_eth
 else
-	if [ -f "/var/tmp/prev_eth_on" ]; then
-		rm /var/tmp/prev_eth_on
+	if [ -f "$_flag_eth" ]; then
+		rm $_flag_eth
 	fi
 fi
 

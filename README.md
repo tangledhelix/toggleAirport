@@ -31,18 +31,20 @@ Configuration
 
 There are a few settings at the top of `toggleAirport.sh`.
 
+Adjust `GROWL` as needed to point to your copy of `growlnotify`.
+
 	GROWL="/usr/bin/growlnotify"
 
-Adjust as needed to point to your copy of `growlnotify`.
+Change if your interfaces differ from these defaults. These are already
+correct for all of the MacBooks I have had in recent years.
 
+	ETHERNET="en0"
 	AIRPORT="en1"
 
-Change if your airport interface is something other than `en1`.
+See below for more on the bluetooth options.
 
 	BLUETOOTH="no"
 	BLUEUTIL="/usr/local/bin/blueutil"
-
-See below for more on the bluetooth options.
 
 Activation
 ----------
@@ -51,9 +53,12 @@ You'll need to activate the service after it's installed.
 
 	sudo launchctl load /Library/LaunchAgents/com.tangledhelix.toggleairport.plist
 
-To deactivate, unload it:
+To deactivate, unload it.
 
 	sudo launchctl unload /Library/LaunchAgents/com.tangledhelix.toggleairport.plist
+
+To deactivate it permanently, first unload, then delete the two files we
+installed above.
 
 Bluetooth support
 -----------------
