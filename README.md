@@ -1,30 +1,30 @@
 Credits
 -------
 
-This service was adapted from this original:
+toggleAirport is based on this post:
 
-<http://hints.macworld.com/article.php?story=20100927161027611>
+http://hints.macworld.com/article.php?story=20100927161027611
 
 Purpose
 -------
 
-This is a launchd service that toggles Airport power based on the presence of
-wired ethernet. The assumption is that if you have wired ethernet, there is no
-need to keep the Aiport interface active.
+toggleAirport is a launchd service that toggles Airport power based on the
+presence of a wired ethernet signal. The assumption is that if you have wired
+ethernet connected, there is no need to keep the Aiport interface active.
 
-It can also toggle Bluetooth power, but that is inverse (it turns on when there
-is wired ethernet present). See below for more about Bluetooth.
+It can also toggle Bluetooth power, but the logic is inverted (Bluetooth turns
+on when wired ethernet is present). See below for more about Bluetooth.
 
 Installation
 ------------
 
 	cp toggleAirport.sh /Library/Scripts
-	chown root:admin /Library/Scripts/toggleAirport.sh
+	chown root:wheel /Library/Scripts/toggleAirport.sh
 	chmod 0755 /Library/Scripts/toggleAirport.sh
 	
-	cp com.tangledhelix.toggleairport.plist /Library/LaunchAgents
-	chown root:admin /Library/LaunchAgents/com.tangledhelix.toggleairport.plist
-	chmod 0644 /Library/LaunchAgents/com.tangledhelix.toggleairport.plist
+	cp com.tangledhelix.toggleairport.plist /Library/LaunchDaemons
+	chown root:wheel /Library/LaunchDaemons/com.tangledhelix.toggleairport.plist
+	chmod 0644 /Library/LaunchDaemons/com.tangledhelix.toggleairport.plist
 
 Configuration
 -------------
@@ -51,11 +51,11 @@ Activation
 
 You'll need to activate the service after it's installed.
 
-	sudo launchctl load /Library/LaunchAgents/com.tangledhelix.toggleairport.plist
+	sudo launchctl load /Library/LaunchDaemons/com.tangledhelix.toggleairport.plist
 
 To deactivate, unload it.
 
-	sudo launchctl unload /Library/LaunchAgents/com.tangledhelix.toggleairport.plist
+	sudo launchctl unload /Library/LaunchDaemons/com.tangledhelix.toggleairport.plist
 
 To deactivate it permanently, first unload, then delete the two files we
 installed above.
