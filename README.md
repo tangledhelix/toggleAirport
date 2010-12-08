@@ -18,13 +18,13 @@ on when wired ethernet is present). See below for more about Bluetooth.
 Installation
 ------------
 
-	cp toggleAirport.sh /Library/Scripts
-	chown root:wheel /Library/Scripts/toggleAirport.sh
-	chmod 0755 /Library/Scripts/toggleAirport.sh
+	sudo cp toggleAirport.sh /Library/Scripts
+	sudo chown root:wheel /Library/Scripts/toggleAirport.sh
+	sudo chmod 0755 /Library/Scripts/toggleAirport.sh
 	
-	cp com.tangledhelix.toggleairport.plist /Library/LaunchDaemons
-	chown root:wheel /Library/LaunchDaemons/com.tangledhelix.toggleairport.plist
-	chmod 0644 /Library/LaunchDaemons/com.tangledhelix.toggleairport.plist
+	sudo cp com.tangledhelix.toggleairport.plist /Library/LaunchDaemons
+	sudo chown root:wheel /Library/LaunchDaemons/com.tangledhelix.toggleairport.plist
+	sudo chmod 0644 /Library/LaunchDaemons/com.tangledhelix.toggleairport.plist
 
 Configuration
 -------------
