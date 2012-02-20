@@ -23,8 +23,8 @@ BLUEUTIL="/usr/local/bin/blueutil"
 # You probably shouldn't change anything past this point.
 
 _nsetup="/usr/sbin/networksetup"
-_flag_air="/var/tmp/prev_air_on"
-_flag_eth="/var/tmp/prev_eth_on"
+_flag_air="/tmp/prev_air_on"
+_flag_eth="/tmp/prev_eth_on"
 
 set_airport() {
 
