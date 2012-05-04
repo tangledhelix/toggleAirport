@@ -18,6 +18,10 @@ BLUETOOTH="no"
 # Path to blueutil
 BLUEUTIL="/usr/local/bin/blueutil"
 
+# If you are using blueutil from homebrew set this to 1.
+# If you're using the binary from frederikseiffert.de, leave it commented.
+#BLUEUTIL_BREW=1
+
 # ----- END CONFIGURATION ----- #
 
 # You probably shouldn't change anything past this point.
@@ -33,13 +37,21 @@ set_airport() {
     if [ $new_status = "On" ]; then
         $_nsetup -setairportpower $AIRPORT on
         if [ "$BLUETOOTH" = "yes" ]; then
-            $BLUEUTIL off
+            if [ -n "$BLUEUTIL_BREW" ]; then
+                $BLUEUTIL power 0
+            else
+                $BLUEUTIL off
+            fi
         fi
         touch $_flag_air
     else
         $_nsetup -setairportpower $AIRPORT off
         if [ "$BLUETOOTH" = "yes" ]; then
-            $BLUEUTIL on
+            if [ -n "$BLUEUTIL_BREW" ]; then
+                $BLUEUTIL power 1
+            else
+                $BLUEUTIL on
+            fi
         fi
         if [ -f "$_flag_air" ]; then
             rm $_flag_air

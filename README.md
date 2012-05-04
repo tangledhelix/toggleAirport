@@ -43,9 +43,6 @@ correct for all of the MacBooks I have had in recent years.
 
 See below for more on the bluetooth options.
 
-    BLUETOOTH="no"
-    BLUEUTIL="/usr/local/bin/blueutil"
-
 Activation
 ----------
 
@@ -63,11 +60,20 @@ installed above.
 Bluetooth support
 -----------------
 
-If you use a Bluetooth keyboard/mouse or other devices, you can have this service
-turn Bluetooth off when you are away from your desk (signaled by the lack of
-wired ethernet). In that case, set `BLUETOOTH` to `yes` in `toggleAirport.sh`.
+If you use a Bluetooth keyboard/mouse or other devices, you can have this
+service turn Bluetooth off when you are away from your desk (signaled by the
+lack of wired ethernet). In that case, set `BLUETOOTH` to `yes` in
+`toggleAirport.sh`.
 
 Bluetooth support requires `blueutil`, found here:
 
 <http://www.frederikseiffert.de/blueutil/>
+
+You can also install `blueutil` via [homebrew][]. If you do that, then set
+
+    BLUEUTIL_BREW=1
+
+This is necessary because the syntax for the command changed at some point.
+The version in homebrew appears to be newer than the version at
+frederikseiffert.de.
 
